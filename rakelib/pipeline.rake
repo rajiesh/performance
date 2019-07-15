@@ -24,9 +24,9 @@ namespace :pipeline do
           p << material
         end
 
-        secret_counter = rand(1..100)
-        p << EnvironmentVariable.new(name: "secret_env_#{secret_counter}",
-                                     value: "{{SECRET:[perf_secret][secret_var_#{secret_counter}]}}", secure: true)
+        # Just add a dummy secure env var to check if thats what is affecting the performance
+        p << EnvironmentVariable.new(name: 'secure_env',
+                                     value: 'secured', secure: true)
 
         if multi_stage_pipeline?(pipeline)
           p << Stage.new(name: 'first') do |s|
